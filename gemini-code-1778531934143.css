@@ -1,0 +1,342 @@
+/* CSS Variables for Dark Theme */
+:root {
+    --bg-main: #121212;
+    --bg-card: #1e1e1e;
+    --bg-card-hover: #252525;
+    --bg-tabs: #0a0a0a;
+    --border-color: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    
+    /* Badge Colors */
+    --color-planned: #ffffff;
+    --color-progress: #ffffff;
+    --color-review: #f5a623;
+    --color-completed: #7ed321;
+    --color-new: #ffffff;
+    
+    --color-high: #ff6b6b;
+    --color-critical: #ff87ab;
+    --color-medium: #f8e71c;
+    --color-low: #4a90e2;
+}
+
+/* Base Reset & Typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    padding: 2rem;
+}
+
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Summary Grid */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.meta-text {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.card-body h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.card-body p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-footer-list {
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.alert-icon { color: #ff6b6b; }
+.success-icon { color: #7ed321; }
+
+/* Tabs */
+.tabs-container {
+    background-color: var(--bg-tabs);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.tab {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.tab.active {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+/* Top Voted Section */
+.top-voted-section {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.section-header h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.section-header p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.top-voted-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.top-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    text-align: center;
+}
+
+.rank-badge {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    background-color: #ffffff;
+    color: #000000;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.top-card .votes {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.top-card h4 {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+.status-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* Table Section */
+.table-section {
+    background-color: var(--bg-main);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.table-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.table-title h2 {
+    font-size: 1.25rem;
+}
+
+.total-badge {
+    background-color: var(--bg-card);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.table-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.primary-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.table-container {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.vote-count {
+    font-weight: 600;
+}
+
+/* Badges & Actions */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    background: transparent;
+    border: 1px solid;
+}
+
+/* Status Colors */
+.status-planned, .status-progress, .status-new { color: var(--color-planned); border-color: var(--border-color); }
+.status-review { color: var(--color-review); border-color: var(--color-review); }
+.status-completed { color: var(--color-completed); border-color: var(--color-completed); }
+
+/* Priority Colors */
+.priority-high { color: var(--color-high); border-color: var(--color-high); }
+.priority-critical { color: var(--color-critical); border-color: var(--color-critical); }
+.priority-medium { color: var(--color-medium); border-color: var(--color-medium); }
+.priority-low { color: var(--color-low); border-color: var(--color-low); }
+
+/* Buttons inside table */
+.action-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.action-btn:hover {
+    background-color: var(--bg-card-hover);
+}

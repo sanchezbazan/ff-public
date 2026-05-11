@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="page-header">
+            <h1>Issue Tracker</h1>
+            <p>Track features, bugs, and script documentation across your project</p>
+        </header>
+
+        <section class="summary-grid">
+            <div class="summary-card">
+                <div class="card-header">
+                    <span class="icon">📋</span>
+                    <span class="meta-text">6 statuses</span>
+                </div>
+                <div class="card-body">
+                    <h2>10</h2>
+                    <p>Feature Requests</p>
+                </div>
+                <div class="card-footer-list">
+                    <div class="list-item"><span>Planned</span><span>2</span></div>
+                    <div class="list-item"><span>In Progress</span><span>2</span></div>
+                    <div class="list-item"><span>Under Review</span><span>2</span></div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-header">
+                    <span class="icon alert-icon">⚠️</span>
+                    <span class="meta-text">4 levels</span>
+                </div>
+                <div class="card-body">
+                    <h2>10</h2>
+                    <p>Bug Reports</p>
+                </div>
+                <div class="card-footer-list">
+                    <div class="list-item"><span>High</span><span>2</span></div>
+                    <div class="list-item"><span>Critical</span><span>1</span></div>
+                    <div class="list-item"><span>Medium</span><span>4</span></div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-header">
+                    <span class="icon">&lt;/&gt;</span>
+                </div>
+                <div class="card-body">
+                    <h2>8</h2>
+                    <p>Scripts Documented</p>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-header">
+                    <span class="icon success-icon">↗️</span>
+                    <span class="meta-text">Last 7 days</span>
+                </div>
+                <div class="card-body">
+                    <h2>20</h2>
+                    <p>Recent Items</p>
+                </div>
+            </div>
+        </section>
+
+        <nav class="tabs-container">
+            <button class="tab active"><span class="icon">📋</span> Features</button>
+            <button class="tab"><span class="icon">⚠️</span> Bugs</button>
+            <button class="tab"><span class="icon">&lt;/&gt;</span> Scripts</button>
+        </nav>
+
+        <section class="top-voted-section">
+            <div class="section-header">
+                <span class="icon trending-icon">📈</span>
+                <div>
+                    <h3>Top 3 Most Voted Features</h3>
+                    <p>Community favorites based on vote count</p>
+                </div>
+            </div>
+
+            <div class="top-voted-grid">
+                <div class="top-card">
+                    <div class="rank-badge">1</div>
+                    <div class="votes">👍 52</div>
+                    <h4>Dark Mode Support</h4>
+                    <div class="status-wrapper">
+                        <span class="badge status-planned">Planned</span>
+                    </div>
+                </div>
+
+                <div class="top-card">
+                    <div class="rank-badge">2</div>
+                    <div class="votes">👍 52</div>
+                    <h4>Jira Integration</h4>
+                    <div class="status-wrapper">
+                        <span class="badge status-review">Under Review</span>
+                    </div>
+                </div>
+
+                <div class="top-card">
+                    <div class="rank-badge">3</div>
+                    <div class="votes">👍 38</div>
+                    <h4>Advanced Search with Filters</h4>
+                    <div class="status-wrapper">
+                        <span class="badge status-progress">In Progress</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="table-header">
+                <div class="table-title">
+                    <h2>Feature Requests</h2>
+                    <span class="total-badge">10 total</span>
+                </div>
+                <div class="table-actions">
+                    <button class="icon-btn">🔄</button>
+                    <button class="primary-btn">+ Add Feature</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Category</th>
+                            <th>Votes</th>
+                            <th>Requested</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dark Mode Support</td>
+                            <td><span class="badge status-planned">Planned</span></td>
+                            <td><span class="badge priority-high">High</span></td>
+                            <td>UI/UX</td>
+                            <td class="vote-count">52</td>
+                            <td>2026-03-12</td>
+                            <td><button class="action-btn">👍 Vote</button></td>
+                        </tr>
+                        <tr>
+                            <td>Export Bug Reports to PDF</td>
+                            <td><span class="badge status-progress">In Progress</span></td>
+                            <td><span class="badge priority-medium">Medium</span></td>
+                            <td>Reporting</td>
+                            <td class="vote-count">23</td>
+                            <td>2026-04-05</td>
+                            <td><button class="action-btn">👍 Vote</button></td>
+                        </tr>
+                        <tr>
+                            <td>Real-time Dashboard Updates</td>
+                            <td><span class="badge status-review">Under Review</span></td>
+                            <td><span class="badge priority-high">High</span></td>
+                            <td>Performance</td>
+                            <td class="vote-count">31</td>
+                            <td>2026-04-20</td>
+                            <td><button class="action-btn">👍 Vote</button></td>
+                        </tr>
+                        <tr>
+                            <td>Bulk Edit Features</td>
+                            <td><span class="badge status-completed">Completed</span></td>
+                            <td><span class="badge priority-medium">Medium</span></td>
+                            <td>UI/UX</td>
+                            <td class="vote-count">18</td>
+                            <td>2026-02-15</td>
+                            <td><button class="action-btn">👍 Vote</button></td>
+                        </tr>
+                        <tr>
+                            <td>Jira Integration</td>
+                            <td><span class="badge status-review">Under Review</span></td>
+                            <td><span class="badge priority-critical">Critical</span></td>
+                            <td>Integration</td>
+                            <td class="vote-count">52</td>
+                            <td>2026-04-28</td>
+                            <td><button class="action-btn">👍 Vote</button></td>
+                        </tr>
+                        <tr>
+                            <td>Custom Field Builder</td>
+                            <td><span class="badge status-new">New</span></td>
+                            <td><span class="badge priority-medium">Medium</span></td>
+                            <td>Other</td>
+                            <td class="vote-count">12</td>
+                            <td>2026-05-05</td>
+                            <td><button class="action-btn">👍 Vote</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
