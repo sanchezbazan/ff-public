@@ -197,6 +197,21 @@
                 </table>
             </div>
         </section>
+
+        <script>
+    // 1. Fetch the raw text of your JS code page
+    fetch("?a=dbpage&pagename=app.js")
+        .then(response => response.text())
+        .then(scriptText => {
+            // 2. Create a new script element
+            const scriptTag = document.createElement('script');
+            // 3. Shove the raw text inside it (bypassing the src strictness)
+            scriptTag.text = scriptText;
+            // 4. Append it to the page so it runs!
+            document.body.appendChild(scriptTag);
+        })
+        .catch(error => console.error("Failed to load script:", error));
+</script>
     </div>
 </body>
 </html>
