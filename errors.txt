@@ -1,0 +1,5 @@
+errors
+
+bvxc9r8ar?a=dbpage&pageID=3:1 Uncaught SyntaxError: Failed to execute 'appendChild' on 'Node': Unexpected token '<'
+    at bvxc9r8ar?a=dbpage&pageID=3:523:27
+(anonymous)	@	bvxc9r8ar?a=dbpage&pageID=3:523
