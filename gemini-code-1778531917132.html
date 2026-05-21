@@ -168,36 +168,181 @@
     ════════════════════════════════════ -->
     <section id="tab-bugs" class="tab-content">
 
-        <div class="table-section">
-            <div class="table-header">
-                <div class="table-title">
-                    <h2>Bug Reports</h2>
-                    <span class="total-badge">10</span>
-                </div>
-                <div class="table-actions">
-                    <button class="primary-btn">+ Report Bug</button>
-                </div>
+        <!-- ================================================
+     PASTE THIS INSIDE:  <section id="tab-bugs" class="tab-content">
+     in your main index.html, replacing the placeholder content
+     ================================================ -->
+ 
+<!-- Stats row for bugs -->
+<div class="summary-grid" style="margin-bottom: 2rem;">
+ 
+    <div class="summary-card">
+        <div class="card-header">
+            <span class="icon alert-icon">&#9888;</span>
+            <span class="meta-text">TOTAL</span>
+        </div>
+        <div class="card-body">
+            <h2 id="bug-total">0</h2>
+            <p>Bug Reports</p>
+        </div>
+    </div>
+ 
+    <div class="summary-card">
+        <div class="card-header">
+            <span class="icon" style="color:var(--color-critical)">&#11044;</span>
+            <span class="meta-text">SEVERITY</span>
+        </div>
+        <div class="card-body">
+            <h2 id="bug-open">0</h2>
+            <p>Open</p>
+        </div>
+        <div class="card-footer-list">
+            <div class="list-item">
+                <span>Critical</span>
+                <span id="bug-critical">0</span>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Severity</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Reported</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem;">No bugs reported yet.</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="list-item">
+                <span>High</span>
+                <span id="bug-high">0</span>
+            </div>
+            <div class="list-item">
+                <span>Medium / Low</span>
+                <span id="bug-medium">0</span>
             </div>
         </div>
+    </div>
+ 
+    <div class="summary-card">
+        <div class="card-header">
+            <span class="icon success-icon">&#10003;</span>
+            <span class="meta-text">RESOLVED</span>
+        </div>
+        <div class="card-body">
+            <h2 id="bug-resolved">0</h2>
+            <p>Resolved</p>
+        </div>
+    </div>
+ 
+</div>
+ 
+<!-- Bug Table -->
+<div class="table-section">
+    <div class="table-header">
+        <div class="table-title">
+            <h2>Bug Reports</h2>
+            <span class="total-badge" id="bug-table-count">0</span>
+        </div>
+        <div class="table-actions">
+            <button class="primary-btn" id="open-bug-modal-btn">+ Report Bug</button>
+        </div>
+    </div>
+ 
+    <!-- Filter bar -->
+    <div class="bug-filter-bar">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="open">Open</button>
+        <button class="filter-chip" data-filter="in-progress">In Progress</button>
+        <button class="filter-chip" data-filter="resolved">Resolved</button>
+        <div class="filter-divider"></div>
+        <button class="filter-chip sev" data-filter="critical">Critical</button>
+        <button class="filter-chip sev" data-filter="high">High</button>
+        <button class="filter-chip sev" data-filter="medium">Medium</button>
+    </div>
+ 
+    <div class="table-container">
+        <table id="bugs-table">
+            <thead>
+                <tr>
+                    <th style="width:5%">#</th>
+                    <th style="width:30%">Description</th>
+                    <th style="width:25%">Affected System</th>
+                    <th style="width:12%">Severity</th>
+                    <th style="width:13%">Status</th>
+                    <th style="width:15%">Reported</th>
+                </tr>
+            </thead>
+            <tbody id="bug-table-body">
+                <tr>
+                    <td colspan="6" class="bugs-loading">
+                        <span class="loading-dot"></span>
+                        <span class="loading-dot"></span>
+                        <span class="loading-dot"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+ 
+<!-- ================================================
+     BUG MODAL
+     ================================================ -->
+<div id="bugModal" class="modal hidden">
+    <div class="modal-content">
+ 
+        <div class="modal-header">
+            <h2>Report a Bug</h2>
+            <button id="closeBugModal" class="close-btn" aria-label="Close">&times;</button>
+        </div>
+ 
+        <div id="bugForm">
+ 
+            <!-- Affected System — multi-select -->
+            <div class="form-field">
+                <label>Affected System</label>
+                <p class="field-hint">Select all that apply</p>
+                <div class="multi-select-grid" id="affected-system-options">
+                    <!-- ⚠️  Replace these with your real QuickBase multi-select option values -->
+                    <label class="ms-option">
+                        <input type="checkbox" value="Fields"> Fields
+                    </label>
+                    <label class="ms-option">
+                        <input type="checkbox" value="Reports"> Reports
+                    </label>
+                    <label class="ms-option">
+                        <input type="checkbox" value="Workflows"> Workflows
+                    </label>
+                    <label class="ms-option">
+                        <input type="checkbox" value="Integrations"> Integrations
+                    </label>
+                    <label class="ms-option">
+                        <input type="checkbox" value="Dashboards"> Dashboards
+                    </label>
+                    <label class="ms-option">
+                        <input type="checkbox" value="Forms"> Forms
+                    </label>
+                    <label class="ms-option">
+                        <input type="checkbox" value="Automations"> Automations
+                    </label>
+                    <label class="ms-option">
+                        <input type="checkbox" value="Pipelines"> Pipelines
+                    </label>
+                </div>
+            </div>
+ 
+            <!-- Description -->
+            <div class="form-field">
+                <label for="bug-description">Description / Issue</label>
+                <p class="field-hint">Describe the bug and steps to reproduce</p>
+                <textarea
+                    id="bug-description"
+                    rows="6"
+                    placeholder="What happened? What did you expect to happen?&#10;&#10;Steps to reproduce:&#10;1. &#10;2. &#10;3. "
+                ></textarea>
+            </div>
+ 
+            <!-- Validation message -->
+            <p id="bug-form-error" class="form-error hidden">
+                Please fill in all required fields before submitting.
+            </p>
+ 
+            <button type="button" class="submit-btn" id="submit-bug-btn">
+                Submit Bug Report
+            </button>
+ 
+        </div>
+    </div>
+</div>
 
     </section>
 
@@ -371,6 +516,27 @@
             if (typeof loadFeatureStats === 'function') loadFeatureStats();
         })
         .catch(function (e) { console.error("getNumofRecords.js failed:", e); });
+</script>
+
+    <script>
+    fetch("?a=dbpage&pagename=bugs_app.js")
+        .then(r => r.text())
+        .then(t => {
+            const s = document.createElement('script');
+            s.text = t;
+            document.body.appendChild(s);
+        });
+</script>
+
+<script>
+    fetch("?a=dbpage&pagename=bug_form.js")
+        .then(r => r.text())
+        .then(t => {
+            const s = document.createElement('script');
+            s.text = t;
+            document.body.appendChild(s);
+            if (typeof initBugForm === 'function') initBugForm();
+        });
 </script>
 
 </body>
