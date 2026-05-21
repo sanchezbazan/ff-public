@@ -347,36 +347,185 @@
     ════════════════════════════════════ -->
     <section id="tab-scripts" class="tab-content">
 
-        <div class="table-section">
-            <div class="table-header">
-                <div class="table-title">
-                    <h2>Scripts</h2>
-                    <span class="total-badge">8</span>
-                </div>
-                <div class="table-actions">
-                    <button class="primary-btn">+ Add Script</button>
-                </div>
+        <!-- ================================================
+     PASTE THIS INSIDE: <section id="tab-scripts" class="tab-content">
+     in your main index.html
+     ================================================ -->
+ 
+<!-- Stats row -->
+<div class="summary-grid" style="margin-bottom: 2rem;">
+ 
+    <div class="summary-card">
+        <div class="card-header">
+            <span class="icon success-icon">&lt;/&gt;</span>
+            <span class="meta-text">TOTAL</span>
+        </div>
+        <div class="card-body">
+            <h2 id="script-total">0</h2>
+            <p>Scripts Documented</p>
+        </div>
+    </div>
+ 
+    <div class="summary-card">
+        <div class="card-header">
+            <span class="icon" style="color:var(--color-progress)">&#128193;</span>
+            <span class="meta-text">CATEGORIES</span>
+        </div>
+        <div class="card-body">
+            <h2>8</h2>
+            <p>Script Types</p>
+        </div>
+        <div class="card-footer-list">
+            <div class="list-item"><span>FF Unique Scripts</span><span id="script-ff">0</span></div>
+            <div class="list-item"><span>Field Rules</span><span id="script-fr">0</span></div>
+            <div class="list-item"><span>Other</span><span id="script-other">0</span></div>
+        </div>
+    </div>
+ 
+    <div class="summary-card">
+        <div class="card-header">
+            <span class="icon" style="color:var(--accent)">&#128269;</span>
+            <span class="meta-text">SEARCH</span>
+        </div>
+        <div class="card-body">
+            <h2 id="script-showing">0</h2>
+            <p>Showing</p>
+        </div>
+    </div>
+ 
+</div>
+ 
+<!-- Search + Add -->
+<div class="scripts-toolbar">
+    <div class="script-search-wrap">
+        <span class="search-icon">&#128269;</span>
+        <input
+            type="text"
+            id="script-search"
+            class="script-search-input"
+            placeholder="Search by description, category, or code…"
+            autocomplete="off"
+        >
+        <button class="search-clear hidden" id="search-clear-btn" aria-label="Clear search">&times;</button>
+    </div>
+    <button class="primary-btn" id="open-script-modal-btn">+ Add Script</button>
+</div>
+ 
+<!-- Category filter chips -->
+<div class="script-filter-bar">
+    <button class="filter-chip active" data-cat="all">All</button>
+    <button class="filter-chip" data-cat="Date/Time">Date / Time</button>
+    <button class="filter-chip" data-cat="Subforms">Subforms</button>
+    <button class="filter-chip" data-cat="GPS">GPS</button>
+    <button class="filter-chip" data-cat="Math">Math</button>
+    <button class="filter-chip" data-cat="Field Rules">Field Rules</button>
+    <button class="filter-chip" data-cat="Lists">Lists</button>
+    <button class="filter-chip" data-cat="FF UNIQUE SCRIPTS">FF Unique</button>
+    <button class="filter-chip" data-cat="Other">Other</button>
+</div>
+ 
+<!-- Script cards grid -->
+<div id="script-cards-grid" class="script-cards-grid">
+    <!-- Populated by scripts_app.js -->
+    <div class="scripts-loading">
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+    </div>
+</div>
+ 
+<!-- No results state (hidden by default) -->
+<div id="scripts-empty" class="scripts-empty hidden">
+    <div style="font-size:28px;margin-bottom:10px;">&lt;/&gt;</div>
+    <p id="scripts-empty-msg">No scripts found.</p>
+</div>
+ 
+ 
+<!-- ================================================
+     VIEW SCRIPT MODAL (read-only, with copy)
+     ================================================ -->
+<div id="scriptViewModal" class="modal hidden">
+    <div class="modal-content modal-wide">
+        <div class="modal-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span class="badge" id="view-category-badge"></span>
+                <h2 id="view-modal-title" style="font-size:14px;font-weight:400;color:var(--text-secondary);"></h2>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Table</th>
-                            <th>Trigger</th>
-                            <th>Updated</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem;">No scripts documented yet.</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <button class="copy-btn-modal" id="copy-modal-btn" title="Copy code">
+                    &#128203; Copy
+                </button>
+                <button id="closeScriptViewModal" class="close-btn" aria-label="Close">&times;</button>
             </div>
         </div>
+        <div class="view-what-it-does" id="view-what-it-does"></div>
+        <div class="code-block-wrap">
+            <pre class="code-block" id="view-code-block"></pre>
+        </div>
+    </div>
+</div>
+ 
+ 
+<!-- ================================================
+     ADD SCRIPT MODAL
+     ================================================ -->
+<div id="scriptModal" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Script</h2>
+            <button id="closeScriptModal" class="close-btn" aria-label="Close">&times;</button>
+        </div>
+ 
+        <div id="scriptForm">
+ 
+            <div class="form-field">
+                <label for="script-category">Category</label>
+                <select id="script-category">
+                    <option value="">— Select a category —</option>
+                    <option value="Date/Time">Date / Time</option>
+                    <option value="Subforms">Subforms</option>
+                    <option value="GPS">GPS</option>
+                    <option value="Math">Math</option>
+                    <option value="Field Rules">Field Rules</option>
+                    <option value="Lists">Lists</option>
+                    <option value="FF UNIQUE SCRIPTS">FF Unique Scripts</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+ 
+            <div class="form-field">
+                <label for="script-what">What It Does</label>
+                <p class="field-hint">One-line summary shown on the card</p>
+                <input
+                    type="text"
+                    id="script-what"
+                    placeholder="e.g. Calculates days between two date fields"
+                    autocomplete="off"
+                >
+            </div>
+ 
+            <div class="form-field">
+                <label for="script-calc">Calculation (JavaScript)</label>
+                <p class="field-hint">Paste your full script here</p>
+                <textarea
+                    id="script-calc"
+                    rows="14"
+                    placeholder="// Paste your JS script here&#10;var x = ..."
+                    spellcheck="false"
+                ></textarea>
+            </div>
+ 
+            <p id="script-form-error" class="form-error hidden">
+                Please fill in all fields before submitting.
+            </p>
+ 
+            <button type="button" class="submit-btn" id="submit-script-btn">
+                Save Script
+            </button>
+ 
+        </div>
+    </div>
+</div>
 
     </section>
 
@@ -533,6 +682,13 @@
             document.body.appendChild(s);
             if (typeof initBugForm === 'function') initBugForm();
         });
+</script>
+
+    <script>
+    loadQBScript("script_app.js");
+    loadQBScript("script_form.js", function() {
+        if (typeof initScriptForm === "function") initScriptForm();
+    });
 </script>
 
 </body>
