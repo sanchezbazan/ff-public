@@ -340,3 +340,96 @@ tr:last-child td {
 .action-btn:hover {
     background-color: var(--bg-card-hover);
 }
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    backdrop-filter: blur(4px);
+}
+
+.hidden {
+    display: none;
+}
+
+.modal-content {
+    width: 520px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    color: var(--text-primary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.modal-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.close-btn {
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: var(--text-primary);
+}
+
+
+#featureForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#featureForm label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+#featureForm textarea,
+#featureForm select {
+    width: 100%;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+#featureForm textarea:focus,
+#featureForm select:focus {
+    border-color: var(--color-low);
+}
+
+.submit-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+    background-color: #eaeaea;
+}
