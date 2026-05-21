@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Issue Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="?a=dbpage&pagename=styles.css">
 </head>
 <body>
     <div class="app-container">
@@ -16,23 +16,23 @@
         <section class="summary-grid">
             <div class="summary-card">
                 <div class="card-header">
-                    <span class="icon">📋</span>
-                    <span class="meta-text">6 statuses</span>
+                    <span class="icon">&#128203;</span>
+                    <h2 class="feature-total">0</h2>
                 </div>
                 <div class="card-body">
-                    <h2>10</h2>
+                    <h2 class="feature-total">0</h2>
                     <p>Feature Requests</p>
                 </div>
                 <div class="card-footer-list">
-                    <div class="list-item"><span>Planned</span><span>2</span></div>
-                    <div class="list-item"><span>In Progress</span><span>2</span></div>
-                    <div class="list-item"><span>Under Review</span><span>2</span></div>
+                    <div class="list-item"><span>Reported</span><span id="reported-count">0</span></div>
+                    <div class="list-item"><span>In-Progress</span><span id="progress-count">0</span></div>
+                    <div class="list-item"><span>Implemented</span><span id="implemented-count">0</span></div>
                 </div>
             </div>
 
             <div class="summary-card">
                 <div class="card-header">
-                    <span class="icon alert-icon">⚠️</span>
+                    <span class="icon alert-icon">&#9888;&#65039;</span>
                     <span class="meta-text">4 levels</span>
                 </div>
                 <div class="card-body">
@@ -56,60 +56,25 @@
                 </div>
             </div>
 
-            <div class="summary-card">
-                <div class="card-header">
-                    <span class="icon success-icon">↗️</span>
-                    <span class="meta-text">Last 7 days</span>
-                </div>
-                <div class="card-body">
-                    <h2>20</h2>
-                    <p>Recent Items</p>
-                </div>
-            </div>
         </section>
 
         <nav class="tabs-container">
-            <button class="tab active"><span class="icon">📋</span> Features</button>
-            <button class="tab"><span class="icon">⚠️</span> Bugs</button>
+            <button class="tab active"><span class="icon">&#128203;</span> Features</button>
+            <button class="tab"><span class="icon">&#9888;&#65039;</span> Bugs</button>
             <button class="tab"><span class="icon">&lt;/&gt;</span> Scripts</button>
         </nav>
 
         <section class="top-voted-section">
             <div class="section-header">
-                <span class="icon trending-icon">📈</span>
+                <span class="icon trending-icon">&#128200;</span>
                 <div>
                     <h3>Top 3 Most Voted Features</h3>
                     <p>Community favorites based on vote count</p>
                 </div>
             </div>
 
-            <div class="top-voted-grid">
-                <div class="top-card">
-                    <div class="rank-badge">1</div>
-                    <div class="votes">👍 52</div>
-                    <h4>Dark Mode Support</h4>
-                    <div class="status-wrapper">
-                        <span class="badge status-planned">Planned</span>
-                    </div>
-                </div>
-
-                <div class="top-card">
-                    <div class="rank-badge">2</div>
-                    <div class="votes">👍 52</div>
-                    <h4>Jira Integration</h4>
-                    <div class="status-wrapper">
-                        <span class="badge status-review">Under Review</span>
-                    </div>
-                </div>
-
-                <div class="top-card">
-                    <div class="rank-badge">3</div>
-                    <div class="votes">👍 38</div>
-                    <h4>Advanced Search with Filters</h4>
-                    <div class="status-wrapper">
-                        <span class="badge status-progress">In Progress</span>
-                    </div>
-                </div>
+            <div class="top-voted-grid" id="top-voted-grid">
+                
             </div>
         </section>
 
@@ -117,10 +82,9 @@
             <div class="table-header">
                 <div class="table-title">
                     <h2>Feature Requests</h2>
-                    <span class="total-badge">10 total</span>
+                    <h2 class="total-badge" id="feature-total-body">0</h2>
                 </div>
                 <div class="table-actions">
-                    <button class="icon-btn">🔄</button>
                     <button class="primary-btn">+ Add Feature</button>
                 </div>
             </div>
@@ -129,76 +93,83 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Title</th>
+                            <th>Description</th>
                             <th>Status</th>
-                            <th>Priority</th>
                             <th>Category</th>
                             <th>Votes</th>
                             <th>Requested</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="feature-table-body">
                         <tr>
-                            <td>Dark Mode Support</td>
-                            <td><span class="badge status-planned">Planned</span></td>
-                            <td><span class="badge priority-high">High</span></td>
-                            <td>UI/UX</td>
-                            <td class="vote-count">52</td>
-                            <td>2026-03-12</td>
-                            <td><button class="action-btn">👍 Vote</button></td>
-                        </tr>
-                        <tr>
-                            <td>Export Bug Reports to PDF</td>
-                            <td><span class="badge status-progress">In Progress</span></td>
-                            <td><span class="badge priority-medium">Medium</span></td>
-                            <td>Reporting</td>
-                            <td class="vote-count">23</td>
-                            <td>2026-04-05</td>
-                            <td><button class="action-btn">👍 Vote</button></td>
-                        </tr>
-                        <tr>
-                            <td>Real-time Dashboard Updates</td>
-                            <td><span class="badge status-review">Under Review</span></td>
-                            <td><span class="badge priority-high">High</span></td>
-                            <td>Performance</td>
-                            <td class="vote-count">31</td>
-                            <td>2026-04-20</td>
-                            <td><button class="action-btn">👍 Vote</button></td>
-                        </tr>
-                        <tr>
-                            <td>Bulk Edit Features</td>
-                            <td><span class="badge status-completed">Completed</span></td>
-                            <td><span class="badge priority-medium">Medium</span></td>
-                            <td>UI/UX</td>
-                            <td class="vote-count">18</td>
-                            <td>2026-02-15</td>
-                            <td><button class="action-btn">👍 Vote</button></td>
-                        </tr>
-                        <tr>
-                            <td>Jira Integration</td>
-                            <td><span class="badge status-review">Under Review</span></td>
-                            <td><span class="badge priority-critical">Critical</span></td>
-                            <td>Integration</td>
-                            <td class="vote-count">52</td>
-                            <td>2026-04-28</td>
-                            <td><button class="action-btn">👍 Vote</button></td>
-                        </tr>
-                        <tr>
-                            <td>Custom Field Builder</td>
-                            <td><span class="badge status-new">New</span></td>
-                            <td><span class="badge priority-medium">Medium</span></td>
-                            <td>Other</td>
-                            <td class="vote-count">12</td>
-                            <td>2026-05-05</td>
-                            <td><button class="action-btn">👍 Vote</button></td>
+                            <td colspan="7">Loading...</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+	
         </section>
+<div id="featureModal" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Feature</h2>
+            <button id="closeModal" class="close-btn">&times;</button>
+        </div>
 
-        <script>
+        <div id="featureForm">
+            <!-- List -->
+            <label></label>
+            <select id="category">
+                <option value="Fields">Fields</option>
+                <option value="Reports">Reports</option>
+                <option value="Workflows">Workflows</option>
+                <option value="Integrations">Integrations</option>
+                <option value="Form-building">Form-building</option>
+                <option value="Lists">Lists</option>
+                <option value="Dashboards">Dashboards</option>
+            </select>
+
+            <!-- Long text fields -->
+            <label>Issue to Address</label>
+            <textarea id="title" rows="2"></textarea>
+
+            <label>Feature Description</label>
+            <textarea id="description" rows="5"></textarea>
+
+            <button type="submit" class="submit-btn">
+                Submit
+            </button>
+        </div>
+    </div>
+</div>
+
+<section id="tab-features" class="tab-content active">
+    <!-- everything features (table + top voted) -->
+</section>
+
+<section id="tab-bugs" class="tab-content hidden">
+    Bugs go here
+</section>
+
+<section id="tab-scripts" class="tab-content hidden">
+    Scripts go here
+</section>
+<script>
+    fetch("?a=dbpage&pagename=feature_form.js")
+        .then(response => response.text())
+        .then(scriptText => {
+            // 2. Create a new script element
+            const scriptTag = document.createElement('script');
+            // 3. Shove the raw text inside it (bypassing the src strictness)
+            scriptTag.text = scriptText;
+            // 4. Append it to the page so it runs!
+            document.body.appendChild(scriptTag);
+        })
+        .catch(error => console.error("Failed to load script:", error));
+    
+</script>
+<script>
     // 1. Fetch the raw text of your JS code page
     fetch("?a=dbpage&pagename=app.js")
         .then(response => response.text())
@@ -211,6 +182,76 @@
             document.body.appendChild(scriptTag);
         })
         .catch(error => console.error("Failed to load script:", error));
+
+
+</script>
+<script>
+    // 1. Fetch the raw text of your JS code page
+    fetch("?a=dbpage&pagename=upVote.js")
+        .then(response => response.text())
+    .then(scriptText => {
+
+        const scriptTag = document.createElement("script");
+
+        scriptTag.text = scriptText;
+
+        document.body.appendChild(scriptTag);
+
+        // OPTIONAL:
+        // initialize after load
+        if (typeof initVoteSystem === "function") {
+            initVoteSystem();
+        }
+
+        if (typeof initFeatureForm === "function") {
+            initFeatureForm();
+        }
+
+    })
+    .catch(error => {
+        console.error("Failed to load script:", error);
+    });
+
+
+</script>
+
+<script>
+fetch("?a=dbpage&pagename=mostVoted.js")
+    .then(response => response.text())
+    .then(scriptText => {
+
+        const scriptTag = document.createElement("script");
+
+        scriptTag.text = scriptText;
+
+        document.body.appendChild(scriptTag);
+
+        if (typeof loadTopVoted === "function") {
+            loadTopVoted();
+        }
+
+    })
+    .catch(error => {
+        console.error(error);
+    });
+</script>
+
+<script>
+fetch("?a=dbpage&pagename=getNumofRecords.js")
+    .then(response => response.text())
+    .then(scriptText => {
+
+        const scriptTag = document.createElement("script");
+
+        scriptTag.text = scriptText;
+
+        document.body.appendChild(scriptTag);
+
+        if (typeof loadFeatureStats === "function") {
+            loadFeatureStats();
+        }
+
+    });
 </script>
     </div>
 </body>
