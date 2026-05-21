@@ -168,13 +168,7 @@
     ════════════════════════════════════ -->
     <section id="tab-bugs" class="tab-content">
 
-        <!-- ================================================
-     PASTE THIS INSIDE:  <section id="tab-bugs" class="tab-content">
-     in your main index.html, replacing the placeholder content
-     ================================================ -->
- 
-<!-- Stats row for bugs -->
-<div class="summary-grid" style="margin-bottom: 2rem;">
+        <div class="summary-grid" style="margin-bottom: 2rem;">
  
     <div class="summary-card">
         <div class="card-header">
@@ -287,37 +281,39 @@
  
         <div id="bugForm">
  
-            <!-- Affected System — multi-select -->
+            <!-- Affected System — multi-select (field 7) -->
             <div class="form-field">
                 <label>Affected System</label>
                 <p class="field-hint">Select all that apply</p>
                 <div class="multi-select-grid" id="affected-system-options">
-                    <!-- ⚠️  Replace these with your real QuickBase multi-select option values -->
                     <label class="ms-option">
-                        <input type="checkbox" value="Fields"> Fields
+                        <input type="checkbox" value="Web App"> Web App
                     </label>
                     <label class="ms-option">
-                        <input type="checkbox" value="Reports"> Reports
+                        <input type="checkbox" value="iOS"> iOS
                     </label>
                     <label class="ms-option">
-                        <input type="checkbox" value="Workflows"> Workflows
+                        <input type="checkbox" value="Android"> Android
                     </label>
-                    <label class="ms-option">
-                        <input type="checkbox" value="Integrations"> Integrations
-                    </label>
-                    <label class="ms-option">
-                        <input type="checkbox" value="Dashboards"> Dashboards
-                    </label>
-                    <label class="ms-option">
-                        <input type="checkbox" value="Forms"> Forms
-                    </label>
-                    <label class="ms-option">
-                        <input type="checkbox" value="Automations"> Automations
-                    </label>
-                    <label class="ms-option">
-                        <input type="checkbox" value="Pipelines"> Pipelines
+                    <label class="ms-option" id="other-checkbox-label">
+                        <input type="checkbox" value="Other" id="other-checkbox"> Other
                     </label>
                 </div>
+            </div>
+ 
+            <!-- Define Other — field 9, only visible when Other is checked -->
+            <div class="form-field" id="define-other-field" style="display:none;">
+                <label for="define-other">
+                    Define Other
+                    <span class="required-star">*</span>
+                </label>
+                <p class="field-hint">Please specify the affected system</p>
+                <input
+                    type="text"
+                    id="define-other"
+                    placeholder="e.g. Desktop App, Admin Portal…"
+                    autocomplete="off"
+                >
             </div>
  
             <!-- Description -->
