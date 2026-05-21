@@ -809,3 +809,217 @@ table th:nth-child(6) { width: 16%; } /* Actions     */
 
     .tabs-container { overflow-x: auto; }
 }
+
+/* &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
+   BUGS
+&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472; */
+
+/* Filter bar */
+    .bug-filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-subtle);
+        flex-wrap: wrap;
+    }
+ 
+    .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        background: transparent;
+        color: var(--text-muted);
+        font-size: 12px;
+        font-family: var(--font-body);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+    }
+    .filter-chip:hover { color: var(--text-primary); border-color: var(--border-active); }
+    .filter-chip.active {
+        background: var(--bg-card-hover);
+        color: var(--text-primary);
+        border-color: var(--border-active);
+    }
+ 
+    /* Severity filter chips coloured when active */
+    .filter-chip.sev[data-filter="critical"].active { color: var(--color-critical); border-color: var(--color-critical); background: rgba(248,113,113,0.08); }
+    .filter-chip.sev[data-filter="high"].active     { color: var(--color-high);     border-color: var(--color-high);     background: rgba(251,146,60,0.08); }
+    .filter-chip.sev[data-filter="medium"].active   { color: var(--color-medium);   border-color: var(--color-medium);   background: rgba(250,204,21,0.08); }
+ 
+    .filter-divider {
+        width: 1px;
+        height: 18px;
+        background: var(--border-color);
+        margin: 0 4px;
+    }
+ 
+    /* Loading dots */
+    .bugs-loading {
+        text-align: center;
+        padding: 3rem !important;
+    }
+    .loading-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        margin: 0 3px;
+        animation: dotPulse 1.2s ease-in-out infinite;
+    }
+    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dotPulse {
+        0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+        40%            { opacity: 1;   transform: scale(1);   }
+    }
+ 
+    /* Bug ID cell */
+    .bug-id {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-muted);
+    }
+ 
+    /* Affected systems pills inside table */
+    .system-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    .system-pill {
+        font-size: 11px;
+        padding: 2px 7px;
+        border-radius: 3px;
+        background: var(--bg-card-hover);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+        font-family: var(--font-mono);
+        white-space: nowrap;
+    }
+ 
+    /* Description cell truncation */
+    .bug-desc-cell {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--text-primary);
+        cursor: pointer;
+    }
+    .bug-desc-cell:hover { color: var(--accent); }
+ 
+    /* Empty state */
+    .bugs-empty {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+    }
+    .bugs-empty p { font-size: 13px; margin-top: 8px; }
+ 
+    /* ── Bug Form specific ── */
+    #bugForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: 1.5rem;
+    }
+ 
+    .form-field label {
+        display: block;
+        font-size: 11px;
+        font-weight: 500;
+        font-family: var(--font-mono);
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 4px;
+    }
+ 
+    .field-hint {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+        font-weight: 300;
+    }
+ 
+    /* Multi-select grid */
+    .multi-select-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+ 
+    .ms-option {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--text-secondary);
+        background: var(--bg-input);
+        transition: all 0.12s;
+        user-select: none;
+    }
+    .ms-option:hover {
+        border-color: var(--border-active);
+        color: var(--text-primary);
+    }
+    .ms-option:has(input:checked) {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: var(--accent-dim2);
+    }
+ 
+    .ms-option input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        accent-color: var(--accent);
+        flex-shrink: 0;
+    }
+ 
+    /* Textarea inside bugForm */
+    #bug-description {
+        width: 100%;
+        background: var(--bg-input);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        border-radius: 4px;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-family: var(--font-body);
+        line-height: 1.6;
+        outline: none;
+        resize: vertical;
+        min-height: 120px;
+        transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    #bug-description:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+ 
+    /* Error message */
+    .form-error {
+        font-size: 12px;
+        color: var(--color-critical);
+        padding: 8px 12px;
+        border: 1px solid rgba(248,113,113,0.25);
+        border-radius: 4px;
+        background: rgba(248,113,113,0.06);
+    }
+ 
+    /* Submitting state */
+    .submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
