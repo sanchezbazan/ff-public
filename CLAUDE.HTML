@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Tracker</title>
+    <link rel="stylesheet" href="?a=dbpage&pagename=styles.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #f7f7f5;
+            --surface: #ffffff;
+            --surface-raised: #ffffff;
+            --border: #e4e4e0;
+            --border-strong: #c8c8c2;
+            --text-primary: #1a1a18;
+            --text-secondary: #6b6b65;
+            --text-muted: #9b9b94;
+            --accent: #2563eb;
+            --accent-light: #eff6ff;
+            --accent-text: #1d4ed8;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --success-text: #15803d;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+            --warning-text: #b45309;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-text: #b91c1c;
+            --purple: #7c3aed;
+            --purple-light: #f5f3ff;
+            --purple-text: #6d28d9;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* ── Header ── */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.4px;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        /* ── Stats row ── */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.1rem 1.25rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+        .card-icon.feat { background: var(--accent-light); }
+        .card-icon.bug  { background: var(--danger-light); }
+        .card-icon.scr  { background: var(--success-light); }
+
+        .card-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+        }
+
+        .card-num {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .card-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .card-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .pill {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 9px;
+            border-radius: 20px;
+        }
+        .pill-blue   { background: var(--accent-light);   color: var(--accent-text); }
+        .pill-green  { background: var(--success-light);  color: var(--success-text); }
+        .pill-amber  { background: var(--warning-light);  color: var(--warning-text); }
+        .pill-red    { background: var(--danger-light);   color: var(--danger-text); }
+        .pill-purple { background: var(--purple-light);   color: var(--purple-text); }
+        .pill-gray   { background: #f3f3f0; color: var(--text-secondary); }
+
+        /* ── Tabs ── */
+        .tabs-container {
+            display: flex;
+            gap: 2px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            margin-bottom: -1px;
+            transition: color 0.15s;
+        }
+        .tab .icon { font-size: 15px; }
+        .tab:hover { color: var(--text-primary); }
+        .tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--text-primary);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ── Top voted ── */
+        .top-voted-section {
+            margin-bottom: 1.75rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .section-header .icon { font-size: 18px; }
+        .section-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .section-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .top-voted-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .voted-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .voted-rank {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .voted-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .voted-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .vote-chip {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--accent-light);
+            color: var(--accent-text);
+        }
+
+        .cat-tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            background: #f3f3f0;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* ── Table section ── */
+        .table-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .table-title h2 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .count-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 1px 7px;
+            border-radius: 20px;
+            background: #f3f3f0;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .primary-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+            background: var(--text-primary);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        .primary-btn:hover { opacity: 0.82; }
+
+        .table-container { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead th {
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            background: #fafaf8;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover td { background: #fafaf8; }
+
+        .desc-cell {
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ── Status badges ── */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 9px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .status-reported,
+        .status-open      { background: var(--warning-light); color: var(--warning-text); }
+        .status-review,
+        .status-in-progress { background: var(--accent-light); color: var(--accent-text); }
+        .status-implemented,
+        .status-closed    { background: var(--success-light); color: var(--success-text); }
+        .status-critical  { background: var(--danger-light);  color: var(--danger-text); }
+        .status-high      { background: var(--warning-light); color: var(--warning-text); }
+        .status-medium    { background: var(--purple-light);  color: var(--purple-text); }
+        .status-low       { background: #f3f3f0; color: var(--text-secondary); }
+
+        /* ── Vote button ── */
+        .vote-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 11px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: #f7f7f5;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .vote-btn:hover {
+            background: var(--accent-light);
+            color: var(--accent-text);
+            border-color: #bfdbfe;
+        }
+        .vote-count {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ── Action buttons ── */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.15s;
+        }
+        .action-btn:hover {
+            background: var(--bg);
+            color: var(--text-primary);
+        }
+
+        /* ── Modal ── */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+        .modal.hidden { display: none; }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            width: 480px;
+            max-width: calc(100vw - 2rem);
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .close-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        .close-btn:hover { background: var(--bg); color: var(--text-primary); }
+
+        #featureForm {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        #featureForm label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        #featureForm select,
+        #featureForm textarea,
+        #featureForm input {
+            width: 100%;
+            font-family: var(--font);
+            font-size: 13px;
+            color: var(--text-primary);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 8px 11px;
+            transition: border-color 0.15s;
+            outline: none;
+        }
+        #featureForm select:focus,
+        #featureForm textarea:focus,
+        #featureForm input:focus {
+            border-color: var(--accent);
+            background: var(--surface);
+        }
+        #featureForm textarea { resize: vertical; line-height: 1.5; }
+
+        .submit-btn {
+            padding: 9px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            background: var(--text-primary);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            margin-top: 4px;
+            transition: opacity 0.15s;
+        }
+        .submit-btn:hover { opacity: 0.82; }
+
+        /* ── Empty state ── */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 720px) {
+            .summary-grid,
+            .top-voted-grid { grid-template-columns: 1fr; }
+            .tabs-container { overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="page-header">
+            <h1>Issue Tracker</h1>
+            <p>Track features, bugs, and script documentation across your project</p>
+        </header>
+
+        <!-- Stats -->
+        <section class="summary-grid">
+
+            <div class="summary-card">
+                <div class="card-top">
+                    <div class="card-icon feat">📋</div>
+                    <span class="card-label">Features</span>
+                </div>
+                <div class="card-num feature-total">0</div>
+                <div class="card-sub">Feature requests</div>
+                <div class="card-pills">
+                    <span class="pill pill-amber" id="reported-count">0 reported</span>
+                    <span class="pill pill-blue"  id="progress-count">0 in-progress</span>
+                    <span class="pill pill-green" id="implemented-count">0 done</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-top">
+                    <div class="card-icon bug">⚠️</div>
+                    <span class="card-label">Bugs</span>
+                </div>
+                <div class="card-num">10</div>
+                <div class="card-sub">Bug reports</div>
+                <div class="card-pills">
+                    <span class="pill pill-red">1 critical</span>
+                    <span class="pill pill-amber">2 high</span>
+                    <span class="pill pill-purple">4 medium</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-top">
+                    <div class="card-icon scr">&lt;/&gt;</div>
+                    <span class="card-label">Scripts</span>
+                </div>
+                <div class="card-num">8</div>
+                <div class="card-sub">Scripts documented</div>
+            </div>
+
+        </section>
+
+        <!-- Tabs -->
+        <nav class="tabs-container">
+            <button class="tab active" data-tab="tab-features">
+                <span class="icon">📋</span> Features
+            </button>
+            <button class="tab" data-tab="tab-bugs">
+                <span class="icon">⚠️</span> Bugs
+            </button>
+            <button class="tab" data-tab="tab-scripts">
+                <span class="icon">&lt;/&gt;</span> Scripts
+            </button>
+        </nav>
+
+        <!-- Features tab -->
+        <section id="tab-features" class="tab-content active">
+
+            <!-- Top Voted -->
+            <div class="top-voted-section">
+                <div class="section-header">
+                    <span class="icon">📈</span>
+                    <div>
+                        <h3>Top 3 most voted features</h3>
+                        <p>Community favorites based on vote count</p>
+                    </div>
+                </div>
+                <div class="top-voted-grid" id="top-voted-grid"></div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-section">
+                <div class="table-header">
+                    <div class="table-title">
+                        <h2>Feature requests</h2>
+                        <span class="count-badge" id="feature-total-body">0</span>
+                    </div>
+                    <div class="table-actions">
+                        <button class="primary-btn" id="open-modal-btn">+ Add feature</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Category</th>
+                                <th>Votes</th>
+                                <th>Requested</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="feature-table-body">
+                            <tr><td colspan="6" class="empty-state">Loading…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Bugs tab -->
+        <section id="tab-bugs" class="tab-content">
+            <div class="table-section">
+                <div class="table-header">
+                    <div class="table-title"><h2>Bug reports</h2></div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Severity</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Reported</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody><tr><td colspan="6" class="empty-state">No bugs reported yet.</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scripts tab -->
+        <section id="tab-scripts" class="tab-content">
+            <div class="table-section">
+                <div class="table-header">
+                    <div class="table-title"><h2>Scripts</h2></div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Table</th>
+                                <th>Trigger</th>
+                                <th>Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody><tr><td colspan="6" class="empty-state">No scripts documented yet.</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /app-container -->
+
+    <!-- Feature Modal — same IDs your feature_form.js expects -->
+    <div id="featureModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add new feature</h2>
+                <button id="closeModal" class="close-btn" aria-label="Close">&times;</button>
+            </div>
+            <div id="featureForm">
+                <div>
+                    <label>Category</label>
+                    <select id="category">
+                        <option value="Fields">Fields</option>
+                        <option value="Reports">Reports</option>
+                        <option value="Workflows">Workflows</option>
+                        <option value="Integrations">Integrations</option>
+                        <option value="Form-building">Form-building</option>
+                        <option value="Lists">Lists</option>
+                        <option value="Dashboards">Dashboards</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Issue to address</label>
+                    <textarea id="title" rows="2" placeholder="What problem needs solving?"></textarea>
+                </div>
+                <div>
+                    <label>Feature description</label>
+                    <textarea id="description" rows="5" placeholder="Describe the feature in detail…"></textarea>
+                </div>
+                <button type="button" class="submit-btn">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab switching -->
+    <script>
+        document.querySelectorAll('.tabs-container .tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Open modal via the new button
+        document.getElementById('open-modal-btn').addEventListener('click', () => {
+            document.getElementById('featureModal').classList.remove('hidden');
+        });
+    </script>
+
+    <!-- Status badge helper exposed globally so app.js can use it -->
+    <script>
+        window.statusBadgeClass = function(status) {
+            const map = {
+                'Reported':    'status-reported',
+                'In-Progress': 'status-in-progress',
+                'In Progress': 'status-in-progress',
+                'Review':      'status-review',
+                'Implemented': 'status-implemented',
+                'Closed':      'status-closed',
+                'Open':        'status-open',
+            };
+            return map[status] || 'status-review';
+        };
+    </script>
+
+    <!-- Your existing scripts — loaded in the same order as before -->
+    <script>
+        fetch("?a=dbpage&pagename=feature_form.js")
+            .then(r => r.text())
+            .then(t => { const s = document.createElement('script'); s.text = t; document.body.appendChild(s); })
+            .catch(e => console.error("Failed to load feature_form.js:", e));
+    </script>
+
+    <script>
+        fetch("?a=dbpage&pagename=app.js")
+            .then(r => r.text())
+            .then(t => { const s = document.createElement('script'); s.text = t; document.body.appendChild(s); })
+            .catch(e => console.error("Failed to load app.js:", e));
+    </script>
+
+    <script>
+        fetch("?a=dbpage&pagename=upVote.js")
+            .then(r => r.text())
+            .then(t => {
+                const s = document.createElement('script');
+                s.text = t;
+                document.body.appendChild(s);
+                if (typeof initVoteSystem === 'function') initVoteSystem();
+                if (typeof initFeatureForm === 'function') initFeatureForm();
+            })
+            .catch(e => console.error("Failed to load upVote.js:", e));
+    </script>
+
+    <script>
+        fetch("?a=dbpage&pagename=mostVoted.js")
+            .then(r => r.text())
+            .then(t => {
+                const s = document.createElement('script');
+                s.text = t;
+                document.body.appendChild(s);
+                if (typeof loadTopVoted === 'function') loadTopVoted();
+            })
+            .catch(e => console.error("Failed to load mostVoted.js:", e));
+    </script>
+
+    <script>
+        fetch("?a=dbpage&pagename=getNumofRecords.js")
+            .then(r => r.text())
+            .then(t => {
+                const s = document.createElement('script');
+                s.text = t;
+                document.body.appendChild(s);
+                if (typeof loadFeatureStats === 'function') loadFeatureStats();
+            })
+            .catch(e => console.error("Failed to load getNumofRecords.js:", e));
+    </script>
+
+</body>
+</html>
