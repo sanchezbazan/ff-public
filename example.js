@@ -1,85 +1,101 @@
-// Quickbase REST API endpoint
 const tableId = "bvxc9tgei";
-const url = "https://api.quickbase.com/v1/records/query";
 
-// Query body
 const body = {
-  from: tableId,
-  select: [6, 7, 8]
+    from: tableId,
+    select: [6, 7, 9, 17, 16, 3, 20]
 };
 
-// Headers for getting temp token
-const authHeaders = {
-  "QB-Realm-Hostname": "team.quickbase.com",
-  "QB-App-Token": "{QB-App-Token}",
-  "Content-Type": "application/json"
-};
-
-// STEP 1: Get temporary token
 const xmlHttp = new XMLHttpRequest();
 
 xmlHttp.open(
-  "GET",
-  `https://api.quickbase.com/v1/auth/temporary/${tableId}`,
-  true
+    "GET",
+    `https://api.quickbase.com/v1/auth/temporary/${tableId}`,
+    true
 );
 
-for (const key in authHeaders) {
-  xmlHttp.setRequestHeader(key, authHeaders[key]);
-}
+xmlHttp.setRequestHeader("QB-Realm-Hostname", "team.quickbase.com");
+xmlHttp.setRequestHeader("QB-App-Token", "{QB-App-Token}");
+xmlHttp.setRequestHeader("Content-Type", "application/json");
 
 xmlHttp.withCredentials = true;
 
 xmlHttp.onreadystatechange = function () {
-  if (xmlHttp.readyState === XMLHttpRequest.DONE) {
 
-    // Parse response
-    const response = JSON.parse(xmlHttp.responseText);
+    if (xmlHttp.readyState === XMLHttpRequest.DONE) {
 
-    console.log(response);
+        const authResponse = JSON.parse(xmlHttp.responseText);
 
-    // Extract temporary token
-    const tempToken = response.temporaryAuthorization;
+        const tempToken = authResponse.temporaryAuthorization;
 
-    // STEP 2: Use token in query request
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "QB-Realm-Hostname": "team.quickbase.com",
-        "Authorization": "QB-TEMP-TOKEN " + tempToken,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-    .then(res => res.json())
-    .then(data => {
+        fetch("https://api.quickbase.com/v1/records/query", {
+            method: "POST",
+            headers: {
+                "QB-Realm-Hostname": "team.quickbase.com",
+                "Authorization": "QB-TEMP-TOKEN " + tempToken,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+        .then(res => res.json())
+        .then(data => {
+            
+            console.log(data)
 
-      console.log(data);
+            const tbody = document.getElementById("feature-table-body");
 
-      const container = document.getElementById("feature-list");
-      container.innerHTML = "";
+            tbody.innerHTML = "";
 
-      data.data.forEach(record => {
+            data.data.forEach(record => {
 
-        const title = record["6"].value;
-        const votes = record["8"].value;
+                const requestedDate = record["6"].value;
+                const category = record["7"].value;
+                const description = record["9"].value;
+                const votes = record["17"].value;
+                const voteUrl = record["16"].value
+                const status = record["20"].value
 
-        const item = document.createElement("div");
+                const row = document.createElement("tr");
+     
 
-        item.className = "top-card";
+                row.innerHTML = `
+                    <td>${description}</td>
 
-        item.innerHTML = `
-          <h4>${title}</h4>
-          <p>&#128077; ${votes}</p>
-        `;
+                    <td>
+                        <span class="badge status-review">
+                            ${status}
+                        </span>
+                    </td>
 
-        container.appendChild(item);
-      });
-    })
-    .catch(err => {
-      console.error("Fetch error:", err);
-    });
-  }
+                    <td>${category}</td>
+
+                    <td class="vote-count">${votes}</td>
+
+                    <td>${requestedDate}</td>
+
+                    <td>
+                        <button 
+                        class="action-btn vote-btn"
+                        data-url="https://www.pipelines.quickbase.com/hooks/webhooks/1dqfpoltam8"
+                        data-vote-url="${voteUrl}"
+                    >
+                        &#128077; Vote
+                    </button>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+                
+                
+
+            });
+            
+            
+
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
 };
 
 xmlHttp.send();
