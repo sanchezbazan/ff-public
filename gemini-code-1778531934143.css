@@ -482,7 +482,7 @@ tbody td {
     padding: 13px 16px;
     border-bottom: 1px solid var(--border-subtle);
     color: var(--text-primary);
-    font-size: 13px;
+    font-size: 15px;
     vertical-align: middle;
 }
 
@@ -606,10 +606,13 @@ table th:nth-child(6) { width: 16%; } /* Actions     */
     border-color: var(--border-active);
 }
 
-.action-btn.vote-btn:hover {
+.action-btn.vote-btn {
     border-color: rgba(232,164,74,0.4);
     color: var(--accent);
     background: var(--accent-dim2);
+    font-size: 18px;
+    padding: 6px 14px;
+    
 }
 
 /* &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
@@ -922,7 +925,7 @@ table th:nth-child(6) { width: 16%; } /* Actions     */
     }
     .bugs-empty p { font-size: 13px; margin-top: 8px; }
  
-    /* ── Bug Form specific ── */
+    /* &#9472;&#9472; Bug Form specific &#9472;&#9472; */
     #bugForm {
         display: flex;
         flex-direction: column;
