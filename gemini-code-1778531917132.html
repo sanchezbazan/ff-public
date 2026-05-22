@@ -600,110 +600,52 @@
 </script>
 
 
-<!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
-     YOUR EXISTING SCRIPTS
-     (loaded in original order)
-&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
+<!-- loadQBScript — safe loader with HTML guard -->
 <script>
-    fetch("?a=dbpage&pagename=feature_form.js")
+function loadQBScript(pagename, onload) {
+    fetch('?a=dbpage&pagename=' + pagename)
         .then(function (r) { return r.text(); })
-        .then(function (t) {
+        .then(function (text) {
+            if (text.trim().charAt(0) === '<') {
+                console.error(
+                    '[loadQBScript] "' + pagename + '" returned HTML, not JS.\n' +
+                    'Check the page name matches exactly in QB Pages (case-sensitive).\n' +
+                    'First 300 chars: ' + text.slice(0, 300)
+                );
+                return;
+            }
             var s = document.createElement('script');
-            s.text = t;
+            s.text = text;
             document.body.appendChild(s);
+            if (typeof onload === 'function') onload();
         })
-        .catch(function (e) { console.error("feature_form.js failed:", e); });
-</script>
-
-<script>
-    fetch("?a=dbpage&pagename=app.js")
-        .then(function (r) { return r.text(); })
-        .then(function (t) {
-            var s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
-        })
-        .catch(function (e) { console.error("app.js failed:", e); });
-</script>
-
-<script>
-    fetch("?a=dbpage&pagename=upVote.js")
-        .then(function (r) { return r.text(); })
-        .then(function (t) {
-            var s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
-            if (typeof initVoteSystem  === 'function') initVoteSystem();
-            if (typeof initFeatureForm === 'function') initFeatureForm();
-        })
-        .catch(function (e) { console.error("upVote.js failed:", e); });
-</script>
-
-<script>
-    fetch("?a=dbpage&pagename=mostVoted.js")
-        .then(function (r) { return r.text(); })
-        .then(function (t) {
-            var s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
-            if (typeof loadTopVoted === 'function') loadTopVoted();
-        })
-        .catch(function (e) { console.error("mostVoted.js failed:", e); });
-</script>
-
-<script>
-    fetch("?a=dbpage&pagename=getNumofRecords.js")
-        .then(function (r) { return r.text(); })
-        .then(function (t) {
-            var s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
-            if (typeof loadFeatureStats === 'function') loadFeatureStats();
-        })
-        .catch(function (e) { console.error("getNumofRecords.js failed:", e); });
-</script>
-
-    <script>
-    fetch("?a=dbpage&pagename=bugs_app.js")
-        .then(r => r.text())
-        .then(t => {
-            const s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
+        .catch(function (e) {
+            console.error('[loadQBScript] Failed to fetch "' + pagename + '":', e);
         });
+}
+ 
+loadQBScript('feature_form.js');
+loadQBScript('app.js');
+loadQBScript('upVote.js', function () {
+    if (typeof initVoteSystem  === 'function') initVoteSystem();
+    if (typeof initFeatureForm === 'function') initFeatureForm();
+});
+loadQBScript('mostVoted.js', function () {
+    if (typeof loadTopVoted === 'function') loadTopVoted();
+});
+loadQBScript('getNumofRecords.js', function () {
+    if (typeof loadFeatureStats === 'function') loadFeatureStats();
+});
+loadQBScript('bugs_app.js');
+loadQBScript('bug_form.js', function () {
+    if (typeof initBugForm === 'function') initBugForm();
+});
+loadQBScript('script_app.js');
+loadQBScript('script_form.js', function () {
+    if (typeof initScriptForm === 'function') initScriptForm();
+});
 </script>
-
-<script>
-    fetch("?a=dbpage&pagename=bug_form.js")
-        .then(r => r.text())
-        .then(t => {
-            const s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
-            if (typeof initBugForm === 'function') initBugForm();
-        });
-</script>
-
-<script>
-    fetch("?a=dbpage&pagename=script_app.js")
-        .then(r => r.text())
-        .then(t => {
-            const s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
-        });
-</script>
-
-<script>
-    fetch("?a=dbpage&pagename=script_form.js")
-        .then(r => r.text())
-        .then(t => {
-            const s = document.createElement('script');
-            s.text = t;
-            document.body.appendChild(s);
-            if (typeof initScriptForm === 'function') initScriptForm();
-        });
-</script>
-
+ 
 </body>
 </html>
+ 
