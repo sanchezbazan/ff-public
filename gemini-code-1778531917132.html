@@ -51,23 +51,23 @@
                 <span class="meta-text">4 LEVELS</span>
             </div>
             <div class="card-body">
-                <h2>10</h2>
-                <p>Bug Reports</p>
+            <h2 id="bug-total-2">0</h2>
+            <p>Bug Reports</p>
+        </div>
+        <div class="card-footer-list">
+            <div class="list-item">
+                <span>Critical</span>
+                <span id="bug-critical-2">0</span>
             </div>
-            <div class="card-footer-list">
-                <div class="list-item">
-                    <span>Critical</span>
-                    <span>1</span>
-                </div>
-                <div class="list-item">
-                    <span>High</span>
-                    <span>2</span>
-                </div>
-                <div class="list-item">
-                    <span>Medium</span>
-                    <span>4</span>
-                </div>
+            <div class="list-item">
+                <span>High</span>
+                <span id="bug-high-2">0</span>
             </div>
+            <div class="list-item">
+                <span>Medium / Low</span>
+                <span id="bug-medium-2">0</span>
+            </div>
+        </div>
         </div>
 
         <div class="summary-card">
@@ -361,7 +361,7 @@
             <span class="meta-text">TOTAL</span>
         </div>
         <div class="card-body">
-            <h2 id="script-total">0</h2>
+            <h2 id="script-tab-total">0</h2>
             <p>Scripts Documented</p>
         </div>
     </div>
@@ -376,9 +376,9 @@
             <p>Script Types</p>
         </div>
         <div class="card-footer-list">
-            <div class="list-item"><span>FF Unique Scripts</span><span id="script-ff">0</span></div>
-            <div class="list-item"><span>Field Rules</span><span id="script-fr">0</span></div>
-            <div class="list-item"><span>Other</span><span id="script-other">0</span></div>
+            <div class="list-item"><span>FF Unique Scripts</span><span id="script-tab-ff">0</span></div>
+            <div class="list-item"><span>Field Rules</span><span id="script-tab-fr">0</span></div>
+            <div class="list-item"><span>Other</span><span id="script-tab-other">0</span></div>
         </div>
     </div>
  
@@ -477,33 +477,33 @@
         </div>
  
         <div id="scriptForm">
+            <div class="form-row-splt">
+                <div class="form-field">
+                    <label for="script-category">Category</label>
+                    <select id="script-category">
+                        <option value="">— Select a category —</option>
+                        <option value="Date/Time">Date / Time</option>
+                        <option value="Subforms">Subforms</option>
+                        <option value="GPS">GPS</option>
+                        <option value="Math">Math</option>
+                        <option value="Field Rules">Field Rules</option>
+                        <option value="Lists">Lists</option>
+                        <option value="FF UNIQUE SCRIPTS">FF Unique Scripts</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
  
-            <div class="form-field">
-                <label for="script-category">Category</label>
-                <select id="script-category">
-                    <option value="">— Select a category —</option>
-                    <option value="Date/Time">Date / Time</option>
-                    <option value="Subforms">Subforms</option>
-                    <option value="GPS">GPS</option>
-                    <option value="Math">Math</option>
-                    <option value="Field Rules">Field Rules</option>
-                    <option value="Lists">Lists</option>
-                    <option value="FF UNIQUE SCRIPTS">FF Unique Scripts</option>
-                    <option value="Other">Other</option>
-                </select>
+                <div class="form-field">
+                    <label for="script-what">What It Does</label>
+                    <p class="field-hint">One-line summary shown on the card</p>
+                    <input
+                        type="text"
+                        id="script-what"
+                        placeholder="e.g. Calculates days between two date fields"
+                        autocomplete="off"
+                    >
+                </div>
             </div>
- 
-            <div class="form-field">
-                <label for="script-what">What It Does</label>
-                <p class="field-hint">One-line summary shown on the card</p>
-                <input
-                    type="text"
-                    id="script-what"
-                    placeholder="e.g. Calculates days between two date fields"
-                    autocomplete="off"
-                >
-            </div>
- 
             <div class="form-field">
                 <label for="script-calc">Calculation (JavaScript)</label>
                 <p class="field-hint">Paste your full script here</p>
@@ -636,7 +636,7 @@ loadQBScript('mostVoted.js', function () {
 loadQBScript('getNumofRecords.js', function () {
     if (typeof loadFeatureStats === 'function') loadFeatureStats();
 });
-loadQBScript('bugs_app.js');
+loadQBScript('bug_app.js');
 loadQBScript('bug_form.js', function () {
     if (typeof initBugForm === 'function') initBugForm();
 });
